@@ -1,0 +1,22 @@
+name: Manual Deploy to Vercel
+
+on:
+  workflow_dispatch:  # Triggered manually by user
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Install Vercel CLI
+        run: |
+          npm install -g vercel
+        
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Ensure you have set this secret in your repository settings
+        run: |
+          vercel --token $VERCEL_TOKEN --prod
